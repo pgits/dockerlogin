@@ -1,0 +1,1 @@
+set PASSWORD FOR 'admin@localhost' = PASSWORD("Os10@Dell.com");
