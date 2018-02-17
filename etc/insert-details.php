@@ -1,5 +1,5 @@
 <?php 
-function insert_details($packageName, $packageBuiltPath, $packageRevision, $lastGoodBuildUsed, $OS_RELEASE, $serverName){
+function insert_details($branch, $packageName, $packageBuiltPath, $packageRevision, $lastGoodBuildUsed, $OS_RELEASE, $serverName){
 $mysqlservername = "localhost";
 $username = "root";
 $password = "";
@@ -18,12 +18,14 @@ if ($conn->connect_error) {
 		echo "Connected successfully";
 	$database 	= "engOps";
 	$table 		= "PackagesPassedSmokeTest";
-	$sqlString = "INSERT INTO " . $database . "." . $table . "(`packageName`, `packageBuiltPath`, `packageRevision`, `lastGoodBuildUsed`, `OS_RELEASE`, `serverName`, `operation`) VALUES (\"$packageName\", \"$packageBuiltPath\", \"$packageRevision\", \"$lastGoodBuildUsed\", \"$OS_RELEASE\", \"$serverName\", 0);";
+	$sqlString = "INSERT INTO " . $database . "." . $table . "(`branch`, `packageName`, `packageBuiltPath`, `packageRevision`, `lastGoodBuildUsed`, `OS_RELEASE`, `serverName`, `operation`) VALUES (\"$branch\", \"$packageName\", \"$packageBuiltPath\", \"$packageRevision\", \"$lastGoodBuildUsed\", \"$OS_RELEASE\", \"$serverName\", 0);";
 	#$sqlString = "INSERT INTO " . $database . "." . $table . "(`packageName`, `packageRevision`, `OS_RELEASE`) VALUES (\"cps-api", \"001\", \"jessie\");";
 	if($DEBUG == TRUE)
 		echo "database = " . $database . "\n";
 	if($DEBUG == TRUE)
 		echo "table = " . $table . "\n";
+	if($DEBUG == TRUE)
+		echo "branch = " . $branch . "\n";
 	if($DEBUG == TRUE)
 		echo "packageName = " . $packageName . "\n";
 	if($DEBUG == TRUE)
