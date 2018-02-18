@@ -19,9 +19,9 @@ if ($conn->connect_error) {
 	$database 	= "engOps";
 	$table 		= "PackagesPassedSmokeTest";
 	if($imageEnterpriseName == "unknown")
-		$sqlString = "UPDATE ". $database . "." . $table . " SET imageBaseName = '$imageBaseName', imageBaseFullPathAndName = '$imageBaseFullPathAndName', operation = 2 WHERE transactionId = $packageTransactionId;";
+		$sqlString = "UPDATE ". $database . "." . $table . " SET imageBaseName = '$imageBaseName', imageBaseFullPathAndName = '$imageBaseFullPathAndName', expires = DATE_ADD(CURRENT_DATE, INTERVAL 2 week), operation = 2 WHERE transactionId = $packageTransactionId;";
 	else
-		$sqlString = "UPDATE ". $database . "." . $table . " SET imageEnterpriseName = '$imageEnterpriseName', imageEnterpriseFullPathAndName = '$imageEnterpriseFullPathAndName', operation = 2 WHERE transactionId = $packageTransactionId;";
+		$sqlString = "UPDATE ". $database . "." . $table . " SET imageEnterpriseName = '$imageEnterpriseName', imageEnterpriseFullPathAndName = '$imageEnterpriseFullPathAndName', expires = DATE_ADD(CURRENT_DATE, INTERVAL 2 week), operation = 2 WHERE transactionId = $packageTransactionId;";
 
 	if($DEBUG == TRUE)
 		echo "database = " . $database . "\n";

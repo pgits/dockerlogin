@@ -1,0 +1,1 @@
+curl -XPOST http://dockerlogin-eqx-01.force10networks.com:8080/iIncludeImage.php -d "packageTransactionId=247&imageBaseName=PKGS_OS10-Base-integrationB.X.6536-installer-x86_64.bin&imageBaseFullPathAndName=/tftpboot/NGOS/merge_testing/247/PKGS_OS10-Base-integrationB.X.6536-installer-x86_64.bin"

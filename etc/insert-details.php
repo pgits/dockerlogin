@@ -18,7 +18,7 @@ if ($conn->connect_error) {
 		echo "Connected successfully";
 	$database 	= "engOps";
 	$table 		= "PackagesPassedSmokeTest";
-	$sqlString = "INSERT INTO " . $database . "." . $table . "(`branch`, `packageName`, `packageBuiltPath`, `packageRevision`, `lastGoodBuildUsed`, `OS_RELEASE`, `serverName`, `operation`) VALUES (\"$branch\", \"$packageName\", \"$packageBuiltPath\", \"$packageRevision\", \"$lastGoodBuildUsed\", \"$OS_RELEASE\", \"$serverName\", 0);";
+	$sqlString = "INSERT INTO " . $database . "." . $table . "(`branch`, `packageName`, `packageBuiltPath`, `packageRevision`, `lastGoodBuildUsed`, `OS_RELEASE`, `serverName`, `operation`,`expires`) VALUES (\"$branch\", \"$packageName\", \"$packageBuiltPath\", \"$packageRevision\", \"$lastGoodBuildUsed\", \"$OS_RELEASE\", \"$serverName\", 0, DATE_ADD(CURRENT_DATE, INTERVAL 2 week));";
 	#$sqlString = "INSERT INTO " . $database . "." . $table . "(`packageName`, `packageRevision`, `OS_RELEASE`) VALUES (\"cps-api", \"001\", \"jessie\");";
 	if($DEBUG == TRUE)
 		echo "database = " . $database . "\n";

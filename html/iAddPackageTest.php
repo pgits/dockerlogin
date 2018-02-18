@@ -6,9 +6,9 @@ if(isset($branch))
 	$branch                = escapeshellcmd($_POST['branch']);
 if(isset($packageName))
 	$packageName           = escapeshellcmd($_POST['packageName']);
-if(isset($pacakgeBuiltPath))
+if(isset($packageBuiltPath))
 	$packageBuiltPath      = escapeshellcmd($_POST['packageBuiltPath']);
-if(isset($pacakgeRevision))
+if(isset($packageRevision))
 	$packageRevision       = escapeshellcmd($_POST['packageRevision'] );
 if(isset($lastGoodBuildUsed))
 	$lastGoodBuildUsed     = escapeshellcmd($_POST['lastGoodBuildUsed'] );
