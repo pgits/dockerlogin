@@ -16,6 +16,8 @@ if(isset($OS_RELEASE))
 	$OS_RELEASE	       = escapeshellcmd($_POST['OS_RELEASE'] );
 if(isset($serverName))
 	$serverName	       = escapeshellcmd($_POST['serverName'] );
+if(isset($pipeline_id))
+	$pipeline_id	       = escapeshellcmd($_POST['pipeline_id'] );
 
 $branch="testing";
 $packageName="l2-services";
@@ -24,8 +26,9 @@ $packageBuiltPath="ngos/workspace/debian/jessie/x86_64/build/pas/package";
 $lastGoodBuildUsed="6536";
 $OS_RELEASE="jessie";
 $serverName="build-eqx-02";
+$pipeline_id="something-special-pipeline-id";
 
-insert_details($branch, $packageName, $packageBuiltPath, $packageRevision, $lastGoodBuildUsed, $OS_RELEASE, $serverName )
+insert_details($branch, $packageName, $packageBuiltPath, $packageRevision, $lastGoodBuildUsed, $OS_RELEASE, $serverName, $pipeline_id )
 
 ?>
 

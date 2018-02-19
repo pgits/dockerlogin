@@ -1,0 +1,2 @@
+echo $1
+curl -d '{ "projectName": "F10-NGOS", "procedureName": "CTM: docker database Cleanup", "body": { "parameters": { "actualParameter": [ { "actualParameterName": "transactionId", "value": '${1}' } ] } } }' -H "Content-Type: application/json" -H "Authorization: Basic bmV0YnVpbGQ6MUZpcmUuZHJpbGw=" -H "Accept: application/json" -X POST https://eflow.force10networks.com/rest/v1.0/jobs?request=runProcedure

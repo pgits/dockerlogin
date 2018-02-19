@@ -1,5 +1,5 @@
 <?php 
-function insert_details($branch, $packageName, $packageBuiltPath, $packageRevision, $lastGoodBuildUsed, $OS_RELEASE, $serverName){
+function insert_details($branch, $packageName, $packageBuiltPath, $packageRevision, $lastGoodBuildUsed, $OS_RELEASE, $serverName, $pipeline_id){
 $mysqlservername = "localhost";
 $username = "root";
 $password = "";
@@ -18,7 +18,7 @@ if ($conn->connect_error) {
 		echo "Connected successfully";
 	$database 	= "engOps";
 	$table 		= "PackagesPassedSmokeTest";
-	$sqlString = "INSERT INTO " . $database . "." . $table . "(`branch`, `packageName`, `packageBuiltPath`, `packageRevision`, `lastGoodBuildUsed`, `OS_RELEASE`, `serverName`, `operation`,`expires`) VALUES (\"$branch\", \"$packageName\", \"$packageBuiltPath\", \"$packageRevision\", \"$lastGoodBuildUsed\", \"$OS_RELEASE\", \"$serverName\", 0, DATE_ADD(CURRENT_DATE, INTERVAL 2 week));";
+	$sqlString = "INSERT INTO " . $database . "." . $table . "(`branch`, `packageName`, `packageBuiltPath`, `packageRevision`, `lastGoodBuildUsed`, `OS_RELEASE`, `serverName`, `operation`,`expires`, `pipeline_id`) VALUES (\"$branch\", \"$packageName\", \"$packageBuiltPath\", \"$packageRevision\", \"$lastGoodBuildUsed\", \"$OS_RELEASE\", \"$serverName\", 0, DATE_ADD(CURRENT_DATE, INTERVAL 2 week), \"$pipeline_id\");";
 	#$sqlString = "INSERT INTO " . $database . "." . $table . "(`packageName`, `packageRevision`, `OS_RELEASE`) VALUES (\"cps-api", \"001\", \"jessie\");";
 	if($DEBUG == TRUE)
 		echo "database = " . $database . "\n";
@@ -38,6 +38,8 @@ if ($conn->connect_error) {
 		echo "OS_RELEASE = " . $OS_RELEASE . "\n";
 	if($DEBUG == TRUE)
 		echo "serverName = " . $serverName . "\n";
+	if($DEBUG == TRUE)
+		echo "pipeline_id = " . $pipeline_id . "\n";
 	if($DEBUG == TRUE)
 		echo "this is what we are sending to mySql:  [" . $sqlString . "]\n";
 	$res = 0;
