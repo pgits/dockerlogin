@@ -1,6 +1,6 @@
 <?php
 
-include('/var/etc/insert-details.php');
+include('/var/www/etc/insert-details.php');
 
 if(isset($branch))
 	$branch                = escapeshellcmd($_POST['branch']);
