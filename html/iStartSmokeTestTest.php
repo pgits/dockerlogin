@@ -2,11 +2,11 @@
 
 include('/var/www/etc/update-smoketest.php');
 
-if(isset($transactionId))
+if(isset($_POST["transactionId"]))
         $transactionId          = escapeshellcmd($_POST['transactionId']);
-if(isset($operation))
+if(isset($_POST["operation"]))
         $operation              = escapeshellcmd($_POST['operation']);
-if(isset($BaseOrEnterprise))
+if(isset($_POST["BaseOrEnterprise"]))
         $BaseOrEnterprise      = escapeshellcmd($_POST['BaseOrEnterprise']);
 
 $transactionId=247;
