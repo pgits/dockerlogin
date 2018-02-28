@@ -1,6 +1,6 @@
 <?php
 
-include('/var/www/etc/insert-details.php');
+include('/var/www/etc/insert-details-premerge.php');
 
 //if (isset($_POST["mail"]) && !empty($_POST["mail"]))
 if(isset($_POST["branch"]))

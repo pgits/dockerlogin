@@ -23,7 +23,15 @@ if ($conn->connect_error) {
    	$rows = array();
    	if($result)
    	{
+		$iCounter = 0;
+		$iMax     = 5;
+		$iSleepFor= 60 * 1;
 		while($r = mysqli_fetch_assoc($result)) {
+			if($iCounter++ > $iMax){
+				$iCounter = 0;
+				printf("going to sleep for %d seconds\n", $iSleepFor);
+				sleep($iSleepFor);
+			}
 			$rows[] = $r;
 			$sqlRemoveString = "DELETE FROM " . $database . "." . $debTable . " WHERE packagesIndex = " . $r["transactionId"] . ";";
 			if($DEBUG){

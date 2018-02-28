@@ -1,9 +1,9 @@
 <?php
 
-include('/var/www/etc/mergeTrigger.php');
-#var $branch, $packageName, $jsonContainer, $mergeUser, $packageRevision;
-if (isset($_POST['branch']))
-$branch                = escapeshellcmd($_POST['branch']);
+include('/var/www/etc/merge-trigger.php');
+
+if (isset($_POST['my_branch']))
+$my_branch                = escapeshellcmd($_POST['my_branch']);
 if (isset($_POST['packageName']))
 $packageName           = escapeshellcmd($_POST['packageName']);
 if (isset($_POST['jsonContainer']))
@@ -12,13 +12,15 @@ if (isset($_POST['mergeUser']))
 $mergeUser             = escapeshellcmd($_POST['mergeUser']);
 if (isset($_POST['packageRevision']))
 $packageRevision       = escapeshellcmd($_POST['packageRevision']);
+if (isset($_POST['pullRequestId']))
+$pullRequestId       = escapeshellcmd($_POST['pullRequestId']);
 
-$branch = "testing";
-$packageName = "l2-services";
-$jsonContainer = "{[\"nada\":\"nothing\"]}";
-$mergeUser = "pgits";
-$packageRevision = "1.1.5";
-mergeTrigger($branch, $packageName, $packageRevision, $jsonContainer, $mergeUser )
+$my_branch = "feature/petes-branch-b";
+$packageName = "petes-repo";
+$jsonContainer = "nada";
+$mergeUser = "admin";
+$pullRequestId = 1;
+mergeTrigger($my_branch, $packageName, $jsonContainer, $mergeUser, $pullRequestId )
 
 ?>
 

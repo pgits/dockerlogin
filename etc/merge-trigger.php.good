@@ -1,7 +1,7 @@
 <?php 
 
 
-function mergeTrigger($branch, $packageName, $packageRevision, $jsonContainer, $mergeUser ){
+function mergeTrigger($branch, $packageName, $packageRevision, $jsonContainer, $mergeUser, $pullRequestId ){
 
 $DEBUG=FALSE;
 $mysqlservername = "localhost";
@@ -17,20 +17,29 @@ if ($conn->connect_error) {
     header("Status: 404");
     return false;
 } else {
-	if($DEBUG != TRUE)
-		header("Status: 200");
+	//header("Status: 200");
+	//header('Content-type: application/json');
 	if($DEBUG == TRUE)
-		echo "Connected successfully";
+		echo "Connected successfully\n";
 	$database   = "engOps";
 	$table      = "mergeTriggerPassedSmokeTest";
 	#$sqlString = "SELECT * FROM $database.mergeTriggerPassedSmokeTest ";
+	if($DEBUG == TRUE)
+		echo "branch = $branch\n";
+	if($DEBUG == TRUE)
+		echo "packageName = $packageName\n";
+	if($DEBUG == TRUE)
+		echo "packageRevision = $packageRevision\n";
+	if($DEBUG == TRUE)
+		echo "mergeUser = $mergeUser\n";
+	if($DEBUG == TRUE)
+		echo "pullRequestId = $pullRequestId\n";
 
-
-	$sqlString = "SELECT transactionId, mergeStatus, packageName, packageBuiltPath, packageRevision, lastGoodBuildUsed, OS_RELEASE, operation, buildRetries, smokeTestTriesBase, serverName, imageBaseName, imageBaseFullPathAndName FROM $database.mergeTriggerPassedSmokeTest WHERE branch = '$branch' AND packageName = '$packageName' AND packageRevision = '$packageRevision' AND mergeStatus > 0 ;";
+	$sqlString = "SELECT transactionId, mergeStatus, packageName, packageBuiltPath, packageRevision, lastGoodBuildUsed, OS_RELEASE, operation, buildRetries, smokeTestTriesBase, serverName, imageBaseName, imageBaseFullPathAndName, pullRequestId FROM $database.mergeTriggerPassedSmokeTest WHERE branch = \"$branch\" AND packageName = \"$packageName\" AND packageRevision = \"$packageRevision\" AND mergeStatus > 0 ;";
 	if($DEBUG == TRUE)
 		echo "database = " . $database . "\n";
 	if($DEBUG == TRUE)
-		echo "this is what we are sending to mySql:  [" . $sqlString . "]\n";
+		echo "\nthis is what we are sending to mySql:  [" . $sqlString . "]\n";
 
 	#$result = $conn->query($sqlString);
 	if($result = mysqli_query($conn, $sqlString)){
@@ -41,7 +50,7 @@ if ($conn->connect_error) {
   			printf("Result set has %d rows.\n",$rowcount);
 		if($rowcount == 0){
 			//this is a trigger to start
-			$sqlString = "INSERT INTO " . $database . "." . $table . "(`packageName`, `packageRevision`, `branch`, `mergeStatus`) VALUES (\"$packageName\", \"$packageRevision\", \"$branch\", 1);";
+			$sqlString = "INSERT INTO " . $database . "." . $table . "(`packageName`, `packageRevision`, `branch`, `mergeStatus`, `pullRequestId`) VALUES (\"$packageName\", \"$packageRevision\", \"$branch\", 1, $pullRequestId );";
 			if($DEBUG == TRUE)
 				echo "this is what we are sending to mySql:  [" . $sqlString . "]\n";
 			if($DEBUG == TRUE)
@@ -55,24 +64,38 @@ if ($conn->connect_error) {
         	if($res){
             	$transId = mysqli_insert_id($conn);
 		 		$data = ['transactionId' => $transId ];
-		 		header("Status: 200");
-		 		header('Content-type: application/json');
+				$data1= "['MergeTriggered': 'trying..']";
+				print json_encode($data1);
 		 		echo json_encode($data);
                 if($DEBUG == TRUE) {
                 	echo "transaction id now = [" . $transId . "]\n";
 		     		echo "call system call back to continuum with jsonContents and transactionId";
-		}
-			mysqli_close($conn);
-			return true;
-		}
+				}
+				mysqli_close($conn);
+				return true;
+			}
 		}
 		//rowcount > 0
+$MERGE_BUILT_AND_SMOKE_TESTED=25;
 		while($r = mysqli_fetch_assoc($result)) {
 				$rows[] = $r;
 				//if($r.mergeStatus == 4)
-				if($DEBUG != TRUE)
-					header("Status: 200");
-				print json_encode($rows);
+
+			    $myMergeStatus = $r["mergeStatus"];
+				if($DEBUG)
+					print("mergeStatus equals  $myMergeStatus");
+				if($myMergeStatus >= $MERGE_BUILT_AND_SMOKE_TESTED)
+					print("['MergeCheckPassed':'succeeded']");
+				else
+					print("['MergeCheck': $myMergeStatus ]");
+			/*	
+				if($DEBUG != TRUE){
+					print json_encode($data);
+				}else {
+					print json_encode($rows);
+					print json_encode($data);
+				}
+			*/
   				mysqli_free_result($result);
 				mysqli_close($conn);
 				return true;
