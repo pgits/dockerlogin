@@ -1,0 +1,1 @@
+curl -d 'branch=testing&packageName=l2-services&packageRevision=4.0.0.1&packageBuiltPath=ngos/workspace/debian/jessie/x86_64/build/l2-services/package&lastGoodBuildUsed=365&OS_RELEASE=jessie&serverName=build-eqx-04&pipeline_id=5a96da4636ede33c722b75ec' -X POST http://dockerlogin-eqx-01.force10networks.com:8080/iAddPackage.php

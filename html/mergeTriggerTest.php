@@ -15,11 +15,11 @@ $packageRevision       = escapeshellcmd($_POST['packageRevision']);
 if (isset($_POST['pullRequestId']))
 $pullRequestId       = escapeshellcmd($_POST['pullRequestId']);
 
-$my_branch = "feature/petes-branch-b";
-$packageName = "petes-repo";
+$my_branch = "testing";
+$packageName = "l2-services";
 $jsonContainer = "nada";
 $mergeUser = "admin";
-$pullRequestId = 1;
+$pullRequestId = 2;
 mergeTrigger($my_branch, $packageName, $jsonContainer, $mergeUser, $pullRequestId )
 
 ?>

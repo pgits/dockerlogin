@@ -1,0 +1,6 @@
+
+
+curl -H "Content-Type: application/json" -H "Authorization: Token 59553bf736ede316388f92ad" -d "{"pi": "5a9726a936ede36b382b75cb", "key": "merge_trigger_returns", "value": {"list": {"build-id": "8598b442-1cac-11e8-ae34-00505694438f", "build-url": "https://eflow.force10networks.com/commander/jobDetails.php?jobId=8598b442-1cac-11e8-ae34-00505694438f", "outcome": "success", "version": "testing.96", "transactionIdJessie": "373", "transactionIdStretch": "373", "packageRevision":"testing.96", "tftpboot_path": "/tftpboot/NGOS/merge_testing/373/PKGS_OS10-Enterprise-testingE.X.6813-installer-x86_64.bin", "transactionId": "2"}}}" -X POST http://veronecontinuum-eqx-01.force10networks.com:8080/api/set_pi_data
+
+
+#curl -X POST -H "Content-Type: application/json" -H "Authorization: Token 59553bf736ede316388f92ad" -d "{"pi": "5a9729c436ede320692b75c6", "key": "returns", "value": {"list": {"build-id": "c20323ac-1cd4-11e8-8fb3-00505694438f", "build-url": "https://eflow.force10networks.com/commander/jobDetails.php?jobId=c20323ac-1cd4-11e8-8fb3-00505694438f", "outcome": "success", "transactionIdJessie": "373", "transactionIdStretch": "373", "tftpboot_path": "", "smokeTestVM": "0", "smokeTestHW": "0"}}}" http://veronecontinuum-eqx-01.force10networks.com:8080/api/set_pi_data
