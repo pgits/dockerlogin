@@ -5,18 +5,11 @@ function setup_copy(){
 	$username = "root";
 	$password = "";
 	$DEBUG=TRUE;
-	// Create connection
-	#$this->mysqli = new mysqli($this->host, $this->user, $this->pwd, $this->database);
-	#$conn = new mysqli($mysqlservername, $username, $password);
-// Check connection
-	#$database 	= "engOps";
-	#$table 		= "PackagesPassedSmokeTest";
 	
-	$commandString = "/usr/bin/python /var/www/CopyAndPaste/fromV12Tempus/copyFromV1.py";
+	$commandString = "/usr/bin/python /var/www/etc/CopyAndPaste/fromV1toTempusFeaturesPlusEpics/copyFromV1.py";
 	if($DEBUG == TRUE)
 		echo "this is the command we are executing :  [" . $commandString . "]\n";
 	$res = 0;
-	#$res = system($commandString, $res);
 	passthru($commandString, $res);
 
         if($res){

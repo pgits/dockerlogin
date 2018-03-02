@@ -12,7 +12,7 @@ function setup_copy(){
 	#$database 	= "engOps";
 	#$table 		= "PackagesPassedSmokeTest";
 	
-	$commandString = "/usr/bin/python /var/www/CopyAndPaste/fromTempus2V1/fromTempus2V1.py";
+	$commandString = "/usr/bin/python /var/www/etc/CopyAndPaste/fromTempus2V1/fromTempus2V1.py";
 	if($DEBUG == TRUE)
 		echo "this is the command we are executing :  [" . $commandString . "]\n";
 	$res = 0;
