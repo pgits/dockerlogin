@@ -1,0 +1,1 @@
+curl -X POST -H "Content-Type: application/json" -H "Authorization: Token 59553bf736ede316388f92ad" -d '{"package": "l2-services", "revision": "testing.101", "fullVersion": "", "phase": "Trigger Merge Package Build"}' http://veronecontinuum-eqx-01.force10networks.com:8080/api/promote_revision

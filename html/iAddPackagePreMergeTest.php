@@ -27,6 +27,17 @@ $lastGoodBuildUsed="6536";
 $OS_RELEASE="jessie";
 $serverName="build-eqx-02";
 $pipeline_id="5a94b24b36ede31c43915462";
+$branch="feature/petes-branch-b";
+
+$branch="testing";
+$packageName="petes-repo";
+$packageName="l2-services";
+$packageRevision="4.0.0.90";
+$packageRevision="testing.99";
+$packageBuiltPath="ngos/workspace/debian/jessie/x86_64/build/l2-service/package";
+$lastGoodBuildUsed="6536";
+$OS_RELEASE="jessie";
+
 
 insert_details($branch, $packageName, $packageBuiltPath, $packageRevision, $lastGoodBuildUsed, $OS_RELEASE, $serverName, $pipeline_id )
 

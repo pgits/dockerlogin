@@ -16,6 +16,7 @@ if (isset($_POST['pullRequestId']))
 $pullRequestId       = escapeshellcmd($_POST['pullRequestId']);
 
 $my_branch = "testing";
+#$my_branch = "ar-rel_10.4.0-R3";
 $packageName = "l2-services";
 $jsonContainer = "nada";
 $mergeUser = "admin";
