@@ -16,12 +16,12 @@ if (isset($_POST['pullRequestId']))
 $pullRequestId       = escapeshellcmd($_POST['pullRequestId']);
 
 $my_branch = "testing";
-#$my_branch = "ar-rel_10.4.0-R3";
 $packageName = "l2-services";
+$packageRevision = "107";
 $jsonContainer = "nada";
 $mergeUser = "admin";
-$pullRequestId = 2;
-mergeTrigger($my_branch, $packageName, $jsonContainer, $mergeUser, $pullRequestId )
+$pullRequestId = 9;
+mergeTrigger($my_branch, $packageName, $packageRevision, $jsonContainer, $mergeUser, $pullRequestId )
 
 ?>
 

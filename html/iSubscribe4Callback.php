@@ -2,18 +2,15 @@
 
 include('/var/www/etc/subscribe4callback.php');
 
-if(isset($_POST["branch"]))
-	$branch                = escapeshellcmd($_POST['branch']);
-if(isset($_POST["repo"]))
-	$packageName           = escapeshellcmd($_POST['repo']);
-if(isset($_POST["pipeline_id"]))
-	$pipeline_id	       = escapeshellcmd($_POST['pipeline_id']);
-if(isset($_POST["jessie"]))
-	$jessie      = escapeshellcmd($_POST['jessie']);
-if(isset($_POST["stretch"]))
-	$stretch      = escapeshellcmd($_POST['stretch']);
-if(isset($_POST["which_service"]))
-	$which_service      = escapeshellcmd($_POST['which_service']);
+$data = json_decode(file_get_contents('php://input'), true);
+
+	$branch                = escapeshellcmd($data["branch"]);
+	$packageName           = escapeshellcmd($data["repo"]);
+	$pipeline_id	       = escapeshellcmd($data["pipeline_id"]);
+	$jessie      	       = escapeshellcmd($data["jessie"]);
+	$stretch      	       = escapeshellcmd($data["stretch"]);
+	$which_service         = escapeshellcmd($data["which_service"]);
+	$mail_to	       = escapeshellcmd($data["mail-to"]);
 
 subsribe_4_calback($branch, $packageName, $pipeline_id, $jessie, $stretch, $which_service )
 

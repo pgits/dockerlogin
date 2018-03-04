@@ -15,11 +15,13 @@ if ($conn->connect_error) {
     header("Status: 404");
     return false;
 } else {
+	header("Status: 200");
+	header('Content-type: application/json');
 	if($DEBUG == TRUE)
 		echo "Connected successfully";
 	$database 	= "engOps";
 	$table 		= "callBacks";
-	$sqlString = "INSERT INTO " . $database . "." . $table . "(`branch`, `packageName`, `pipeline_id`, `transactionIdJessie`, `transactionIdStretch`, `serviceName`) VALUES (\"$branch\", \"$packageName\", \"$pipeline_id\", $jessie, $stretch, $which_service);";
+	$sqlString = "INSERT INTO " . $database . "." . $table . "(`branch`, `packageName`, `pipeline_id`, `serviceName`) VALUES (\"$branch\", \"$packageName\", \"$pipeline_id\", $which_service);";
 	if($DEBUG == TRUE)
 		echo "database = " . $database . "\n";
 	if($DEBUG == TRUE)
@@ -36,8 +38,6 @@ if ($conn->connect_error) {
         if($res){
                  $transId = mysqli_insert_id($conn);
 		 $data = ['callbackTransactionId' => $transId ];
-		 header("Status: 200");
-		 header('Content-type: application/json');
 		 echo json_encode($data);
                  if($DEBUG == TRUE)
                      echo "transaction id now = [" . $transId . "]\n";

@@ -1,6 +1,5 @@
 <?php 
 
-
 function mergeTrigger($branch, $packageName, $packageRevision, $jsonContainer, $mergeUser, $pullRequestId ){
 
 $DEBUG=TRUE;
@@ -50,7 +49,7 @@ if ($conn->connect_error) {
   			printf("Result set has %d rows.\n",$rowcount);
 		if($rowcount == 0){
 			//this is a trigger to start
-			$sqlString = "INSERT INTO " . $database . "." . $table . "(`packageName`, `packageRevision`, `branch`, `mergeStatus`, `pullRequestId`) VALUES (\"$packageName\", \"$packageRevision\", \"$branch\", 1, $pullRequestId );";
+			$sqlString = "INSERT INTO " . $database . "." . $table . "(`packageName`, `packageRevision`, `branch`, `mergeStatus`, `pullRequestId`) VALUES (\"$packageName\", $packageRevision, \"$branch\", 1, $pullRequestId );";
 			if($DEBUG == TRUE)
 				echo "this is what we are sending to mySql:  [" . $sqlString . "]\n";
 			if($DEBUG == TRUE)
@@ -71,6 +70,20 @@ if ($conn->connect_error) {
                 	echo "transaction id now = [" . $transId . "]\n";
 		     		echo "call system call back to continuum with jsonContents and transactionId";
 				}
+
+			$ch = curl_init('http://veronecontinuum-eqx-01.force10networks.com:8080/api/promote_revision');
+			curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+			curl_setopt($ch, CURLOPT_POST, 1);
+			curl_setopt($ch, CURLOPT_POSTFIELDS, "package=$packageName&revision=$packageRevision&phase=Trigger Merge Package Build");
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+			curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+				'Authorization: Token 59553bf736ede316388f92ad'
+    				)
+			);                                                                                                                   
+			$result = curl_exec($ch);
+			curl_close($ch);
+			var_dump($result);
+
 				mysqli_close($conn);
 				return true;
 			}
