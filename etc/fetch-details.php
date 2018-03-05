@@ -19,13 +19,13 @@ if ($conn->connect_error) {
 	if($DEBUG == TRUE)
 		echo "Connected successfully";
 	$database 	= "engOps";
-	#$sqlString = "SELECT * FROM $database.PackagesPassedSmokeTest ";
-
+	$tableMerge     = "mergeTriggerPassedSmokeTest";
+	$tableDetails   = "debFilesPerPackage";
 
 	if($transactionId <= 0)
-	    $sqlString = "SELECT PackagesPassedSmokeTest.transactionId, packageName, packageBuiltPath, packageRevision, lastGoodBuildUsed, OS_RELEASE, operation, packagesIndex, debFileName, debArtifactoryName, buildRetries, smokeTestRetries, serverName, imageName, imageFullPathAndName FROM $database.PackagesPassedSmokeTest JOIN $database.debFilesPerPackage ON PackagesPassedSmokeTest.transactionId = debFilesPerPackage.packagesIndex WHERE PackagesPassedSmokeTest.operation = $operation AND PackagesPassedSmokeTest.OS_RELEASE = '$os_release' ORDER BY PackagesPassedSmokeTest.transactionId DESC;";
+	    $sqlString = "SELECT $tableMerge.transactionId, packageName, packageBuiltPath, packageRevision, lastGoodBuildUsed, OS_RELEASE, operation, packagesIndex, debFileName, debArtifactoryName, buildRetries, smokeTestTriesBase, smokeTestTriesEnterprise, serverName, imageBaseName, imageEnterpriseName, imageBaseFullPathAndName, imageEnterpriseFullPathAndName FROM $database.$tableMerge JOIN $database.debFilesPerPackage ON $tableMerge.transactionId = debFilesPerPackage.packagesIndex WHERE $tableMerge.operation = $operation AND $tableMerge.OS_RELEASE = '$os_release' ORDER BY $tableMerge.transactionId DESC;";
 	else 
-	   $sqlString = "SELECT PackagesPassedSmokeTest.transactionId, packageName, packageBuiltPath, packageRevision, lastGoodBuildUsed, OS_RELEASE, operation, packagesIndex, debFileName, debArtifactoryName, buildRetries, smokeTestRetries, serverName, imageName, imageFullPathAndName FROM $database.PackagesPassedSmokeTest JOIN $database.debFilesPerPackage ON PackagesPassedSmokeTest.transactionId = debFilesPerPackage.packagesIndex WHERE PackagesPassedSmokeTest.transactionId = $transactionId AND PackagesPassedSmokeTest.operation = '$operation' AND PackagesPassedSmokeTest.OS_RELEASE = $os_release ORDER BY PackagesPassedSmokeTest.transactionId DESC;";
+	   $sqlString = "SELECT $tableMerge.transactionId, packageName, packageBuiltPath, packageRevision, lastGoodBuildUsed, OS_RELEASE, operation, packagesIndex, debFileName, debArtifactoryName, buildRetries, smokeTestTriesBase, smokeTestTriesEnterprise, serverName, imageBaseName, imageEnterpriseName, imageBaseFullPathAndName, imageEnterpriseFullPathAndName FROM $database.$tableMerge JOIN $database.debFilesPerPackage ON $tableMerge.transactionId = debFilesPerPackage.packagesIndex WHERE $tableMerge.transactionId = $transactionId AND $tableMerge.operation = '$operation' AND $tableMerge.OS_RELEASE = $os_release ORDER BY $tableMerge.transactionId DESC;";
 	if($DEBUG == TRUE)
 		echo "database = " . $database . "\n";
 	if($DEBUG == TRUE)
@@ -33,9 +33,10 @@ if ($conn->connect_error) {
 	if($DEBUG == TRUE)
 		echo "operation = " . $operation . "\n";
 	if($DEBUG == TRUE)
+		echo "OS_RELEASE = " . $os_release . "\n";
+	if($DEBUG == TRUE)
 		echo "this is what we are sending to mySql:  [" . $sqlString . "]\n";
 
-	#$result = $conn->query($sqlString);
         $result = mysqli_query($conn, $sqlString);
 	$rows = array();
 	if($result)

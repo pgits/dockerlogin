@@ -15,11 +15,12 @@ if(isset($_POST["imageBaseFullPathAndName"]))
 if(isset($_POST["imageEnterpriseFullPathAndName"]))
 	$imageEnterpriseFullPathAndName       = escapeshellcmd($_POST['imageEnterpriseFullPathAndName']);
 
-$packageTransactionId="247";
-$imageBaseName="PKGS_OS10-Base-integrationB.X.6536-installer-x86_64.bin";
-$imageEnterpriseName="PKGS_OS10-Enterprise-integrationE.X.6536-installer-x86_64.bin";
-$imageBaseFullPathAndName="/tftpboot/NGOS/merge_testing/$packageTransactionId/PKGS_OS10-Base-integrationB.X.6536-installer-x86_64.bin";
-$imageEnterpriseFullPathAndName="/tftpboot/NGOS/merge_testing/$packageTransactionId/PKGS_OS10-Enterprise-integrationE.X.6536-installer-x86_64.bin";
+$packageTransactionId="19";
+$LastBuildUsed="6844";
+$imageBaseName="PKGS_OS10-Base-integrationB.X.$LastBuildUsed-installer-x86_64.bin";
+$imageEnterpriseName="PKGS_OS10-Enterprise-integrationE.X.$LastBuildUsed-installer-x86_64.bin";
+$imageBaseFullPathAndName="/tftpboot/NGOS/merge_testing/$packageTransactionId/PKGS_OS10-Base-integrationB.X.$LastBuildUsed-installer-x86_64.bin";
+$imageEnterpriseFullPathAndName="/tftpboot/NGOS/merge_testing/$packageTransactionId/PKGS_OS10-Enterprise-integrationE.X.$LastBuildUsed-installer-x86_64.bin";
 #$imageEnterpriseName="unknown";
 update_details($packageTransactionId, $imageBaseName, $imageBaseFullPathAndName, $imageEnterpriseName, $imageEnterpriseFullPathAndName )
 

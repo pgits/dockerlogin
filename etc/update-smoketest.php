@@ -1,5 +1,5 @@
 <?php 
-function update_smoketest($transactionId, $operation, $baseOrEnterprise){
+function update_smoketest($transactionId, $operation, $baseOrEnterprise, $preMergeFlag){
 $mysqlservername = "localhost";
 $username = "root";
 $password = "";
@@ -19,7 +19,10 @@ if ($conn->connect_error) {
 	if($DEBUG == TRUE)
 		echo "Connected successfully";
 	$database 	= "engOps";
-	$table		= "PackagesPassedSmokeTest";
+	if($preMergeFlag == TRUE)
+		$table		= "PackagesPassedSmokeTest";
+	else
+		$table		= "mergeTriggerPassedSmokeTest";
 
 	if($baseOrEnterprise == "base")
 		$sqlString = "UPDATE $database.$table set operation = $operation, smokeTestStartedBase = NOW(), smokeTestTriesBase = smokeTestTriesBase + 1 where transactionId = $transactionId";

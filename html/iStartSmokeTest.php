@@ -9,8 +9,10 @@ if(isset($_POST["operation"]))
         $operation              = escapeshellcmd($_POST['operation']);
 if(isset($_POST["BaseOrEnterprise"]))
         $BaseOrEnterprise      = escapeshellcmd($_POST['BaseOrEnterprise']);
+if(isset($_POST["PreMergeFlag"]))
+        $PreMergeFlag      = escapeshellcmd($_POST['PreMergeFlag']);
 
-update_smoketest($transactionId, $operation, $BaseOrEnterprise)
+update_smoketest($transactionId, $operation, $BaseOrEnterprise, $PreMergeFlag)
 
 ?>
 

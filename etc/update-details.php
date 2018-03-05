@@ -17,7 +17,7 @@ if ($conn->connect_error) {
 	if($DEBUG == TRUE)
 		echo "Connected successfully";
 	$database 	= "engOps";
-	$table 		= "PackagesPassedSmokeTest";
+	$table 		= "mergeTriggerPassedSmokeTest";
 	if($imageEnterpriseName == "unknown")
 		$sqlString = "UPDATE ". $database . "." . $table . " SET imageBaseName = '$imageBaseName', imageBaseFullPathAndName = '$imageBaseFullPathAndName', expires = DATE_ADD(CURRENT_DATE, INTERVAL 2 week), operation = 2 WHERE transactionId = $packageTransactionId;";
 	else
