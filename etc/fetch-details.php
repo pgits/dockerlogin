@@ -1,5 +1,6 @@
 <?php 
-function fetch_details($transactionId, $operation, $os_release ){
+//do I need the branch here????
+function fetch_details($transactionId, $branch, $operation, $os_release ){
 $mysqlservername = "localhost";
 $username = "root";
 $password = "";
@@ -23,9 +24,9 @@ if ($conn->connect_error) {
 	$tableDetails   = "debFilesPerPackage";
 
 	if($transactionId <= 0)
-	    $sqlString = "SELECT $tableMerge.transactionId, packageName, packageBuiltPath, packageRevision, lastGoodBuildUsed, OS_RELEASE, operation, packagesIndex, debFileName, debArtifactoryName, buildRetries, smokeTestTriesBase, smokeTestTriesEnterprise, serverName, imageBaseName, imageEnterpriseName, imageBaseFullPathAndName, imageEnterpriseFullPathAndName FROM $database.$tableMerge JOIN $database.debFilesPerPackage ON $tableMerge.transactionId = debFilesPerPackage.packagesIndex WHERE $tableMerge.operation = $operation AND $tableMerge.OS_RELEASE = '$os_release' ORDER BY $tableMerge.transactionId DESC;";
+	    $sqlString = "SELECT $tableMerge.transactionId, packageName, packageBuiltPath, packageRevision, lastGoodBuildUsed, OS_RELEASE, operation, packagesIndex, debFileName, debArtifactoryName, buildRetries, smokeTestTriesBase, smokeTestTriesEnterprise, serverName, imageBaseName, imageEnterpriseName, imageBaseFullPathAndName, imageEnterpriseFullPathAndName FROM $database.$tableMerge JOIN $database.debFilesPerPackage ON $tableMerge.transactionId = debFilesPerPackage.packagesIndex WHERE $tableMerge.operation = $operation AND $tableMerge.OS_RELEASE = '$os_release'  AND $tableMerge.branch = '$branch' AND PreMerge = 0 ORDER BY $tableMerge.transactionId DESC;";
 	else 
-	   $sqlString = "SELECT $tableMerge.transactionId, packageName, packageBuiltPath, packageRevision, lastGoodBuildUsed, OS_RELEASE, operation, packagesIndex, debFileName, debArtifactoryName, buildRetries, smokeTestTriesBase, smokeTestTriesEnterprise, serverName, imageBaseName, imageEnterpriseName, imageBaseFullPathAndName, imageEnterpriseFullPathAndName FROM $database.$tableMerge JOIN $database.debFilesPerPackage ON $tableMerge.transactionId = debFilesPerPackage.packagesIndex WHERE $tableMerge.transactionId = $transactionId AND $tableMerge.operation = '$operation' AND $tableMerge.OS_RELEASE = $os_release ORDER BY $tableMerge.transactionId DESC;";
+	   $sqlString = "SELECT $tableMerge.transactionId, packageName, packageBuiltPath, packageRevision, lastGoodBuildUsed, OS_RELEASE, operation, packagesIndex, debFileName, debArtifactoryName, buildRetries, smokeTestTriesBase, smokeTestTriesEnterprise, serverName, imageBaseName, imageEnterpriseName, imageBaseFullPathAndName, imageEnterpriseFullPathAndName FROM $database.$tableMerge JOIN $database.debFilesPerPackage ON $tableMerge.transactionId = debFilesPerPackage.packagesIndex WHERE $tableMerge.transactionId = $transactionId AND $tableMerge.operation = '$operation' AND $tableMerge.OS_RELEASE = '$os_release' AND $tableMerge.branch = '$branch' AND PreMerge = 0 ORDER BY $tableMerge.transactionId DESC;";
 	if($DEBUG == TRUE)
 		echo "database = " . $database . "\n";
 	if($DEBUG == TRUE)

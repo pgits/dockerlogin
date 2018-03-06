@@ -15,12 +15,18 @@ $packageRevision       = escapeshellcmd($_POST['packageRevision']);
 if (isset($_POST['pullRequestId']))
 $pullRequestId       = escapeshellcmd($_POST['pullRequestId']);
 
+$my_branch = "integration";
+$my_branch = "ar-rel_10.4.0-X2";
 $my_branch = "testing";
+$packageName = "base-model";
+$packageName = "mgmt-cm";
 $packageName = "l2-services";
-$packageRevision = "107";
-$jsonContainer = "nada";
+$packageRevision = "49";
+$packageRevision = "68";
+$packageRevision = "108";
+$jsonContainer = "nothing";
 $mergeUser = "admin";
-$pullRequestId = 9;
+$pullRequestId = 11;
 mergeTrigger($my_branch, $packageName, $packageRevision, $jsonContainer, $mergeUser, $pullRequestId )
 
 ?>

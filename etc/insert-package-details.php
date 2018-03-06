@@ -1,5 +1,5 @@
 <?php 
-function insert_package_details($packageTransactionId, $debFileName, $debArtifactoryName){
+function insert_package_details($packageTransactionId, $debFileName, $debArtifactoryName, $preMergeFlag){
 $mysqlservername = "localhost";
 $username = "root";
 $password = "";
@@ -8,7 +8,7 @@ $password = "";
 #$this->mysqli = new mysqli($this->host, $this->user, $this->pwd, $this->database);
 $conn = new mysqli($mysqlservername, $username, $password);
 
-$DEBUG=FALSE;
+$DEBUG=TRUE;
 // Check connection
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
@@ -17,9 +17,11 @@ if ($conn->connect_error) {
 } else {
 	if($DEBUG == TRUE)
 		echo "Connected successfully";
+	if($DEBUG == TRUE)
+		echo "preMergeFlag = $preMergeFlag\n";
 	$database 	= "engOps";
 	$table 		= "debFilesPerPackage";
-	$sqlString = "INSERT INTO " . $database . "." . $table . "(`packagesIndex`, `debFileName`, `debArtifactoryName`) VALUES (\"$packageTransactionId\", \"$debFileName\", \"$debArtifactoryName\");";
+	$sqlString = "INSERT INTO " . $database . "." . $table . "(`packagesIndex`, `debFileName`, `debArtifactoryName`, `PreMergeFlag`) VALUES (\"$packageTransactionId\", \"$debFileName\", \"$debArtifactoryName\", $preMergeFlag);";
 	if($DEBUG == TRUE)
 		echo "database = " . $database . "\n";
 	if($DEBUG == TRUE)

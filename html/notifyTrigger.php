@@ -1,6 +1,6 @@
 <?php
 
-include('/var/www/etc/merge-trigger.php');
+include('/var/www/etc/notify-trigger.php');
 
 if (isset($_POST['my_branch']))
 $my_branch                = escapeshellcmd($_POST['my_branch']);
