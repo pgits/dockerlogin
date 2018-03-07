@@ -6,6 +6,7 @@ $DEBUG=TRUE;
 $mysqlservername = "localhost";
 $username = "root";
 $password = "";
+$ONLY_TESTING=false;
 // Create connection
 #$this->mysqli = new mysqli($this->host, $this->user, $this->pwd, $this->database);
 $conn = new mysqli($mysqlservername, $username, $password);
@@ -57,9 +58,9 @@ if ($conn->connect_error) {
 			if($DEBUG == TRUE)
 				echo "this is what we are sending to mySql:  [" . $sqlString . "]\n";
 			if($ONLY_TESTING == TRUE && strcasecmp( $branch, 'testing' ) != 0 )
-					print("['MergeCheckPassed':'succeeded']");
-					error_log("strSql = [" . $strSql . "]\n" , 3, "../html/merge-trigger.log");
-			}
+				print("['MergeCheckPassed':'succeeded']");
+				error_log("sqlString = [" . $sqlString . "]\n" , 3, "../html/merge-trigger.log");
+		}
 			$insertRes = 0;
 			$insertRes = mysqli_query($conn, $sqlString);
 			if($insertRes){
@@ -110,7 +111,6 @@ if ($conn->connect_error) {
 				mysqli_close($conn);
 				return true;
 		}
-  	}
-	}//end else
+  	}//end of else
 }
 ?>
