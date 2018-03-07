@@ -21,7 +21,7 @@ if ($conn->connect_error) {
 		echo "preMergeFlag = $preMergeFlag\n";
 	$database 	= "engOps";
 	$table 		= "debFilesPerPackage";
-	$sqlString = "INSERT INTO " . $database . "." . $table . "(`packagesIndex`, `debFileName`, `debArtifactoryName`, `PreMergeFlag`) VALUES (\"$packageTransactionId\", \"$debFileName\", \"$debArtifactoryName\", $preMergeFlag);";
+	$sqlString = "INSERT INTO " . $database . "." . $table . "(`packagesIndex`, `debFileName`, `debArtifactoryName`, `PreMerge`) VALUES (\"$packageTransactionId\", \"$debFileName\", \"$debArtifactoryName\", $preMergeFlag);";
 	if($DEBUG == TRUE)
 		echo "database = " . $database . "\n";
 	if($DEBUG == TRUE)

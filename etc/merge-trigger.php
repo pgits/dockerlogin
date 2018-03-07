@@ -3,8 +3,6 @@
 function mergeTrigger($branch, $packageName, $packageRevision, $jsonContainer, $mergeUser, $pullRequestId ){
 
 $DEBUG=TRUE;
-$LOG="/var/www/etc/log/mergeTrigger.out";
-echo "instantiate-log" >> $LOG;
 $mysqlservername = "localhost";
 $username = "root";
 $password = "";
@@ -58,10 +56,14 @@ if ($conn->connect_error) {
 				echo "table = " . $table . "\n";
 			if($DEBUG == TRUE)
 				echo "this is what we are sending to mySql:  [" . $sqlString . "]\n";
+			if($ONLY_TESTING == TRUE && strcasecmp( $branch, 'testing' ) != 0 )
+					print("['MergeCheckPassed':'succeeded']");
+					error_log("strSql = [" . $strSql . "]\n" , 3, "../html/merge-trigger.log");
+			}
 			$insertRes = 0;
 			$insertRes = mysqli_query($conn, $sqlString);
 			if($insertRes){
-            	$transId = mysqli_insert_id($conn);
+				$transId = mysqli_insert_id($conn);
 		 		$data = ['transactionId' => $transId ];
 				$data1= "['MergeTriggered': 'trying..']";
 				print json_encode($data1);
@@ -69,7 +71,6 @@ if ($conn->connect_error) {
 				if($DEBUG == TRUE) {
 					echo "transaction id now = [" . $transId . "]\n";
 					echo "call system call back to continuum with jsonContents and transactionId";
-					echo "call system call back to continuum with jsonContents and transactionId" >> $LOG;
 				}
 
 				$ch = curl_init('http://veronecontinuum-eqx-01.force10networks.com:8080/api/promote_revision');
@@ -101,11 +102,9 @@ if ($conn->connect_error) {
 					print("mergeStatus equals  $myMergeStatus");
 				if($myMergeStatus >= $MERGE_BUILT_AND_SMOKE_TESTED){
 					print("['MergeCheckPassed':'succeeded']");
-					print("['MergeCheckPassed':'succeeded']") >> $LOG;
 				}
 				else {
 					print("['MergeCheck': $myMergeStatus ]");
-					print("['MergeCheck': $myMergeStatus ]") >> $LOG;
 				}
   				mysqli_free_result($select_result);
 				mysqli_close($conn);

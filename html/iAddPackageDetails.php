@@ -9,10 +9,10 @@ if(isset($_POST["debFileName"]))
         $debFileName              = escapeshellcmd($_POST['debFileName']);
 if(isset($_POST["debArtifactoryName"]))
         $debArtifactoryName       = escapeshellcmd($_POST['debArtifactoryName']);
-if(isset($_POST["preMergeFlag"]))
-        $preMergeFlag       = escapeshellcmd($_POST['preMergeFlag']);
+if(isset($_POST["PreMergeFlag"]))
+        $PreMergeFlag       = escapeshellcmd($_POST['PreMergeFlag']);
 
-insert_package_details($packageTransactionId, $debFileName, $debArtifactoryName, $preMergeFlag)
+insert_package_details($packageTransactionId, $debFileName, $debArtifactoryName, $PreMergeFlag)
 
 ?>
 

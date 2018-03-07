@@ -24,6 +24,11 @@ $packageName = "l2-services";
 $packageRevision = "49";
 $packageRevision = "68";
 $packageRevision = "108";
+
+$my_branch = "ar-rel_10.4.0-R3";
+$packageName = "mgmt-monitoring";
+$packageRevision = "105";
+
 $jsonContainer = "nothing";
 $mergeUser = "admin";
 $pullRequestId = 11;
