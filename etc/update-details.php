@@ -3,7 +3,7 @@ function update_details($packageTransactionId, $imageBaseName, $imageBaseFullPat
 $mysqlservername = "localhost";
 $username = "root";
 $password = "";
-$DEBUG=FALSE;
+$DEBUG=TRUE;
 // Create connection
 #$this->mysqli = new mysqli($this->host, $this->user, $this->pwd, $this->database);
 $conn = new mysqli($mysqlservername, $username, $password);

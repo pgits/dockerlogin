@@ -1,2 +1,13 @@
 123
 strSql = []
+sqlString = [INSERT INTO engOps.mergeTriggerPassedSmokeTest(`packageName`, `packageRevision`, `branch`, `mergeStatus`, `pullRequestId`, `expires`) VALUES ("testing", 4.0.0.84, "feature/branch-a", 1, 1, DATE_ADD(CURRENT_DATE, INTERVAL 2 week) );]
+sqlString = [INSERT INTO engOps.mergeTriggerPassedSmokeTest(`packageName`, `packageRevision`, `branch`, `mergeStatus`, `pullRequestId`, `expires`) VALUES ("testing", , "feature/branch-a", 1, 1, DATE_ADD(CURRENT_DATE, INTERVAL 2 week) );]
+sqlString = [INSERT INTO engOps.mergeTriggerPassedSmokeTest(`packageName`, `packageRevision`, `branch`, `mergeStatus`, `pullRequestId`, `expires`) VALUES ("mgmt-monitoring", '', "ar-rel_10.4.0-R3", 1, 11, DATE_ADD(CURRENT_DATE, INTERVAL 2 week) );]
+sqlString = [INSERT INTO engOps.mergeTriggerPassedSmokeTest(`packageName`, `packageRevision`, `branch`, `mergeStatus`, `pullRequestId`, `expires`) VALUES ("mgmt-monitoring", '', "ar-rel_10.4.0-R3", 1, 11, DATE_ADD(CURRENT_DATE, INTERVAL 2 week) );]
+sqlString = [INSERT INTO engOps.mergeTriggerPassedSmokeTest(`packageName`, `packageRevision`, `branch`, `mergeStatus`, `pullRequestId`, `expires`) VALUES ("mgmt-clish", '', "integration", 1, 11, DATE_ADD(CURRENT_DATE, INTERVAL 2 week) );]
+sqlString = [INSERT INTO engOps.mergeTriggerPassedSmokeTest(`packageName`, `packageRevision`, `branch`, `mergeStatus`, `pullRequestId`, `expires`) VALUES ("mgmt-clish", '', "integration", 1, 11, DATE_ADD(CURRENT_DATE, INTERVAL 2 week) );]
+sqlString = [INSERT INTO engOps.mergeTriggerPassedSmokeTest(`packageName`, `packageRevision`, `branch`, `mergeStatus`, `pullRequestId`, `expires`) VALUES ("mgmt-clish", "326", "integration", 1, 11, DATE_ADD(CURRENT_DATE, INTERVAL 2 week) );]
+sqlString = [INSERT INTO engOps.mergeTriggerPassedSmokeTest(`packageName`, `packageRevision`, `branch`, `mergeStatus`, `pullRequestId`, `expires`) VALUES ("mgmt-clish", "326", "integration", 1, 11, DATE_ADD(CURRENT_DATE, INTERVAL 2 week) );]
+sqlString = [INSERT INTO engOps.mergeTriggerPassedSmokeTest(`packageName`, `packageRevision`, `branch`, `mergeStatus`, `pullRequestId`, `expires`) VALUES ("mgmt-clish", "326", "integration", 1, 11, DATE_ADD(CURRENT_DATE, INTERVAL 2 week) );]
+sqlString = [INSERT INTO engOps.mergeTriggerPassedSmokeTest(`packageName`, `packageRevision`, `branch`, `mergeStatus`, `pullRequestId`, `expires`) VALUES ("mgmt-clish", "326", "integration", 1, 11, DATE_ADD(CURRENT_DATE, INTERVAL 2 week) );]
+sqlString = [INSERT INTO engOps.mergeTriggerPassedSmokeTest(`packageName`, `packageRevision`, `branch`, `mergeStatus`, `pullRequestId`, `expires`) VALUES ("mgmt-clish", "326", "integration", 1, 11, DATE_ADD(CURRENT_DATE, INTERVAL 2 week) );]

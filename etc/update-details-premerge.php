@@ -3,7 +3,7 @@ function update_details($packageTransactionId, $imageBaseName, $imageBaseFullPat
 $mysqlservername = "localhost";
 $username = "root";
 $password = "";
-$DEBUG=FALSE;
+$DEBUG=TRUE;
 // Create connection
 #$this->mysqli = new mysqli($this->host, $this->user, $this->pwd, $this->database);
 $conn = new mysqli($mysqlservername, $username, $password);
@@ -17,7 +17,7 @@ if ($conn->connect_error) {
 	if($DEBUG == TRUE)
 		echo "Connected successfully";
 	$database 	= "engOps";
-	$table 		= "mergeTriggerPassedSmokeTest";
+	$table 		= "PackagesPassedSmokeTest";
 	if($imageEnterpriseName == "unknown")
 		$sqlString = "UPDATE ". $database . "." . $table . " SET imageBaseName = '$imageBaseName', imageBaseFullPathAndName = '$imageBaseFullPathAndName', expires = DATE_ADD(CURRENT_DATE, INTERVAL 2 week), operation = 2 WHERE transactionId = $packageTransactionId;";
 	else
