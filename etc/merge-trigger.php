@@ -124,31 +124,31 @@ if ($conn->connect_error) {
 			echo json_encode($data);
 			if($DEBUG == TRUE) {
 				echo "transaction id now = [" . $transId . "]\n";
-				echo "call system call back to continuum with jsonContents and transactionId";
+				echo "call system call back to continuum with jsonContents and transactionId\n";
 			}
 			//promote_revision($ch, $packageName, $branch, $packageRevision);
-			setapi($conn, $database, $packageName, $branch, $packageRevision);
+			setapi($DEBUG, $conn, $database, $packageName, $branch, $packageRevision, $transId);
 			mysqli_close($conn);
 			return true;
 		}
 		}//end of row_count = 0
-	}
-	//rowcount > 0
-	$MERGE_BUILT_AND_SMOKE_TESTED=25;
-	while($r = mysqli_fetch_assoc($select_result)) {
-		$rows[] = $r;
-		//if($r.mergeStatus == 4)
-
-		$myMergeStatus = $r["mergeStatus"];
-		if($DEBUG)
-			print("mergeStatus equals  $myMergeStatus");
-		if($myMergeStatus >= $MERGE_BUILT_AND_SMOKE_TESTED){
-			print("['MergeCheckPassed':'succeeded']");
+		//rowcount > 0
+		$MERGE_BUILT_AND_SMOKE_TESTED=25;
+		while($r = mysqli_fetch_assoc($select_result)) {
+			$rows[] = $r;
+			//if($r.mergeStatus == 4)
+	
+			$myMergeStatus = $r["mergeStatus"];
+			if($DEBUG)
+				print("mergeStatus equals  $myMergeStatus");
+			if($myMergeStatus >= $MERGE_BUILT_AND_SMOKE_TESTED){
+				print("['MergeCheckPassed':'succeeded']");
+			}
+			else {
+				print("['MergeCheck': $myMergeStatus ]");
+			}
+  			mysqli_free_result($select_result);
 		}
-		else {
-			print("['MergeCheck': $myMergeStatus ]");
-		}
-  		mysqli_free_result($select_result);
 	}
 	mysqli_close($conn);
 	return true;
@@ -172,12 +172,18 @@ function promote_revision($ch, $packageName, $branch, $packageRevision) {
                         var_dump($curl_result);
 }
 
-function fetchSubscription($conn, $database, $packageName, $branch, &$pipeline_id, &$packageRevision){
-	$sqlString = "SELECT * from FROM $database.callBacks WHERE branch = \"$branch\" AND packageName = \"$packageName\" AND ORDER BY transactionId DESC;";
+function fetchSubscription($DEBUG, $conn, $database, $packageName, $branch, &$pipeline_id, &$packageRevision){
+	$sqlString = "SELECT * FROM $database.callBacks WHERE branch = \"$branch\" AND packageName = \"$packageName\" ORDER BY transId DESC LIMIT 1;";
 	//return the rows with the continuumId and the revision	
+	if($DEBUG == TRUE)
+		echo "\nfetchSubscription()= this is what we are sending to mySql:  [" . $sqlString . "]\n";
+	
 	$resSelect = mysqli_query($conn, $sqlString);
 	if($resSelect){
 		$rows = array();
+  		$rowcount=mysqli_num_rows($resSelect);
+		if($DEBUG == TRUE)
+  			printf("Result set has %d rows.\n",$rowcount);
 		if($resSelect)
         	{
                 	while($r = mysqli_fetch_assoc($resSelect))
@@ -194,23 +200,46 @@ function fetchSubscription($conn, $database, $packageName, $branch, &$pipeline_i
 }
 
 //calls fetchSubscription to pull down both packageRevision and the pipeline_id
-// and then uses that to continue the pipeline to the next phase
+// and then uses that to continue the pipeline to nudge continuum to the next phase
 
-function setapi($conn, $database, $packageName, $branch, $packageRevision, $imageEnterpriseFullPathAndName, $imageBaseFullPathAndName, $transactionId){
-	fetchSubscription($conn, $database, $packageName, $branch, $pipeline_id, $packageRevision);	
+function setapi($DEBUG, $conn, $database, $packageName, $branch, $packageRevision, $transactionId) {
+	if($DEBUG == TRUE){
+		echo "packageName = [$packageName]\n";
+		echo "branch = [$branch]\n";
+		echo "packageRevision = [$packageRevision]\n";
+		echo "transactionId = [$transactionId]\n";
+	}
+	fetchSubscription($DEBUG, $conn, $database, $packageName, $branch, $pipeline_id, $packageRevision);	
 	$packageRevisionJustNumber = substr($packageRevision, strrpos($packageRevision, ".") + 1);
-	$someJSON="{\"pi\": \"$pipeline_id\", " .
-			    "\"key\": \"returns\", \"value\": " .
-				"{\"list\": " .
-				   "\"version\": \"$packageRevisionJustNumber\", " .
-				   "\"transactionIdStretch\": \"$transactionId\", " .
-				   "\"package\": \"$packageName\", " .
-				   "\"branch\": \"$branch\", " .
-				   "\"tftpboot_enterprise_path\": \"$imageEnterpriseFullPathAndName\", " .
-				   "\"tftpboot_base_path\": \"$imageBaseFullPathAndName\", " .
-				   "\"transactionId\": \"$transactionId\" " .
-				"}" .
-		  "}";
+
+/*
+{"pi": "5aa2bd8f36ede36cae22a45d", 
+ "key": "merge_trigger_returns", "value": {
+   "list": {
+     "version": "28", 
+     "transactionIdStretch": "40", 
+     "package": "infra-chm", 
+     "branch": "integration", 
+     "transactionId": "40" 
+     }
+ }
+}
+*/
+	$someJSON="{\"pi\": \"$pipeline_id\", \n" .
+			    "\"key\": \"merge_trigger_returns\", \n" .
+				"\t\"value\": {\n" .
+					"\t\t\"list\": {\n" .
+				   	"\t\t\t\"version\": \"$packageRevisionJustNumber\", \n" .
+				   	"\t\t\t\"transactionIdStretch\": \"$transactionId\", \n" .
+				   	"\t\t\t\"package\": \"$packageName\", \n" .
+				   	"\t\t\t\"branch\": \"$branch\", \n" .
+	//				"\t\t\t\"tftpboot_enterprise_path\": \"$imageEnterpriseFullPathAndName\", \n" .
+	//				"\t\t\t\"tftpboot_base_path\": \"$imageBaseFullPathAndName\", \n" .
+				   	"\t\t\t\"transactionId\": \"$transactionId\" \n" .
+				        "\t\t\t}\n" .
+		  		"\t}\n".
+		"}";
+	print_r($someJSON);
 		// Convert JSON string to Array
   	$someArray = json_decode($someJSON, true);
   	print_r($someArray);        // Dump all data of the Array

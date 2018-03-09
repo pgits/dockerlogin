@@ -1,5 +1,5 @@
 <?php 
-function subsribe_4_calback($branch, $packageName, $pipeline_id, $jessie, $stretch, $which_service ){
+function subsribe_4_calback($branch, $packageName, $packageRevision, $pipeline_id, $jessie, $stretch, $which_service ){
 $mysqlservername = "localhost";
 $username = "root";
 $password = "";
@@ -21,13 +21,11 @@ if ($conn->connect_error) {
 		echo "Connected successfully";
 	$database 	= "engOps";
 	$table 		= "callBacks";
-	$sqlString = "INSERT INTO " . $database . "." . $table . "(`branch`, `packageName`, `pipeline_id`, `serviceName`) VALUES (\"$branch\", \"$packageName\", \"$pipeline_id\", $which_service);";
+	$sqlString = "INSERT INTO " . $database . "." . $table . "(`branch`, `packageName`, `packageRevision`, `pipeline_id`, `serviceName`) VALUES (\"$branch\", \"$packageName\", \"$packageRevision\", \"$pipeline_id\", $which_service);";
 	if($DEBUG == TRUE)
 		echo "database = " . $database . "\n";
 	if($DEBUG == TRUE)
 		echo "table = " . $table . "\n";
-	if($DEBUG == TRUE)
-		echo "packageTransactionId = " . $packageTransactionId . "\n";
 	if($DEBUG == TRUE)
 		echo "debFileName = " . $debFileName . "\n";
 	if($DEBUG == TRUE)
